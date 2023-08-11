@@ -1,28 +1,21 @@
+import { TPermission } from "./Premission";
 
 class Role {
-  private id: string;
-  private name: string;
-  private permissions: string[];
-
-  constructor(id: string, name: string, permissions: string[]) {
-    this.id = id;
+  name!: TPermission;
+  permissions!: string[];
+  constructor(name: TPermission) {
     this.name = name;
-    this.permissions = permissions;
+    this.permissions = this.assignPermissions(name);
   }
-
-  getId(): string {
-    return this.id;
+  private assignPermissions(name: TPermission): string[] {
+    if (name === "admin") {
+      return ["permission1", "permission2", "permission3"];
+    } else if (name === "user") {
+      return ["permission1", "permission2"];
+    } else {
+      throw new Error(`Unknown RoleEntity: ${name}`);
+    }
   }
-
-  getName(): string {
-    return this.name;
-  }
-
-  getPermissions(): string[] {
-    return this.permissions;
-  }
-
-  
 }
 
 export default Role;
