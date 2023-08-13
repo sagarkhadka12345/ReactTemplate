@@ -16,6 +16,21 @@ class Role {
       throw new Error(`Unknown RoleEntity: ${name}`);
     }
   }
+  getName(): string {
+    return this.name;
+  }
+
+  getPermissions(): string[] {
+    return this.permissions;
+  }
+  toJSON(): Record<TPermission | string, string | Array<string>> {
+    return {
+      name: this.getName(),
+      permissions: this.getPermissions(),
+
+      // Serialize other properties as needed
+    };
+  }
 }
 
 export default Role;

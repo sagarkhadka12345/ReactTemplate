@@ -3,13 +3,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import AuthRepository from "../../../Repository/AuthRepositoryImpl";
 import { User } from "../../../../Domain/Model/User";
 
-interface AuthState {
-  user: User | null;
-  isLoggedIn: boolean;
-}
-
 interface JSONAuthState {
-  user: Record<string, string | Record<string, string | string[]>> | null;
+  user: User | null;
   isLoggedIn: boolean;
 }
 const initialState: JSONAuthState = {
@@ -20,6 +15,7 @@ const initialState: JSONAuthState = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
+
   reducers: {
     login: (state, action: PayloadAction<JSONAuthState>) => {
       state.user = action.payload.user;

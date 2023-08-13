@@ -1,17 +1,15 @@
 // application/useCases/authentication/Login.ts
-import AuthService from "../../Services/Authentication/Authentication";
+
 import { User } from "../../../Domain/Model/User";
-import Role from "../../../Domain/Model/Role";
+import { IAuthInterface } from "../../../Domain/Repository/IAuthRepository";
 
 export class LoginUseCase {
-  private authService: AuthService;
-
-  constructor(authService: AuthService) {
-    this.authService = authService;
+  _authRepository: IAuthInterface;
+  constructor(authRepositroy: IAuthInterface) {
+    this._authRepository = authRepositroy;
   }
-
   async execute(username: string, password: string): Promise<User | null> {
-    const user = await this.authService.login(username, password);
+    const user = await this._authRepository.authenticate(username, password);
     return user;
   }
 }

@@ -1,46 +1,47 @@
 // presentation/components/Login.tsx
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
+
 import { login } from "../../../Infrastructure/Utilities/Redux/Slices/AuthSlice";
 
 import { LoginUseCase } from "../../../Application/UserCases/Authentication/login";
-import AuthService from "../../../Application/Services/Authentication/Authentication";
-import AuthRepository from "../../../Infrastructure/Repository/AuthRepositoryImpl";
+
 import {
   useAppDispatch,
   useAppSelector,
 } from "../../../Infrastructure/Utilities/Redux/Slices/Hooks/Hooks";
+import { useNavigate } from "react-router";
+
+import authRepository from "../../../Infrastructure/Repository/AuthRepositoryImpl";
 
 function Login() {
+  const location = useNavigate();
   const dispatch = useAppDispatch();
-
   const userLoggedin = useAppSelector((state) => state.auth);
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const authRepository = new AuthRepository();
-  const authService = new AuthService(authRepository);
-  const loginUseCase = new LoginUseCase(authService);
+  const loginUseCase = new LoginUseCase(authRepository);
   const handleLogin = async () => {
-    // Dispatch login action and handle response
     const userFrom = await loginUseCase.execute(username, password);
-    const user = dispatch(
+    dispatch(
       login({
-        user: userFrom ? userFrom.toJSON() : null,
+        user: userFrom,
         isLoggedIn: userFrom ? true : false,
       })
     );
-    console.log(userLoggedin);
-
-    if (userLoggedin.user) {
-      console.log("Logged in:", user);
+    if (
+      userLoggedin.user &&
+      userLoggedin.user.getRoleEntity().name === "admin"
+    ) {
+      // location("/admin", { replace: true });
+    } else if (
+      userLoggedin.user &&
+      userLoggedin.user.getRoleEntity().name === "admin"
+    ) {
+      // location("/user", { replace: true });
     } else {
       console.log("Login failed");
     }
   };
-
-  console.log(userLoggedin.user);
-
   return (
     <div>
       <input
@@ -56,6 +57,13 @@ function Login() {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={handleLogin}>Login</button>
+
+      <div>
+        {userLoggedin.user?.getUsername()}
+        {userLoggedin.user?.getRoleEntity().name}
+        {userLoggedin.user?.getRoleEntity().getPermissions()}
+        {userLoggedin.user?.getPassword()}
+      </div>
     </div>
   );
 }
