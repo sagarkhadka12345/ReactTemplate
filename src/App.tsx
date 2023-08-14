@@ -1,6 +1,8 @@
 import React from "react";
+
+import "./Assets/Fonts/poppins/stylesheet.css";
 import "./App.css";
-import TodoListView from "./Presentation/Features/Todo/TodoList/TodoListView";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route } from "react-router";
@@ -17,7 +19,6 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<Login />}></Route>
-            <Route path="/" element={<TodoListView />}></Route>
           </Routes>
         </BrowserRouter>
       </Provider>

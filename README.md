@@ -1,1 +1,3 @@
-Clean Architecture: Typescript and React
+Hotel Management System
+
+Umbrella solutions

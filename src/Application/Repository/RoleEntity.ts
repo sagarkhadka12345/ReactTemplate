@@ -1,14 +1,12 @@
-import { TPermission } from "../../../../Domain/Model/Premission";
-import Role from "../../../../Domain/Model/Role";
+import { TPermission } from "../../Domain/Model/Premission";
+import Role from "../../Domain/Model/Role";
 
 class RoleEntity extends Role {
- 
   permissions!: string[];
 
   constructor(name: TPermission) {
-    super(name)
+    super(name);
   }
-  
 
   getName(): string {
     return this.name;

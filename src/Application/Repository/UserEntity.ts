@@ -1,4 +1,4 @@
-import { User } from "../../../../Domain/Model/User";
+import { User } from "../../Domain/Model/User";
 import RoleEntity from "./RoleEntity";
 
 export class UserEntity extends User {
@@ -17,13 +17,13 @@ export class UserEntity extends User {
     return this.role;
   }
   toJSON(): Record<
-    "username" | "password" | "RoleEntity",
+    "username" | "password" | "role",
     string | Record<string, string | Array<string>>
   > {
     return {
       username: this.getUsername(),
       password: this.getPassword(),
-      role: this.getRoleEntity.toJSON(),
+      role: this.getRoleEntity().toJSON(),
       // Serialize other properties as needed
     };
   }

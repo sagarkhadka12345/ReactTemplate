@@ -1,12 +1,16 @@
-import RoleEntity from "../../DataSource/API/Entity/RoleEntity";
+import RoleEntity from "../../Repository/RoleEntity";
 import { User } from "../../../Domain/Model/User";
+import { UserEntity } from "../../Repository/UserEntity";
 
 export class AuthRepository {
-  async authenticate(username: string, password: string): Promise<User | null> {
+  async authenticate(
+    username: string,
+    password: string
+  ): Promise<UserEntity | null> {
     // Simulated authentication logic
     if (username === "user" && password === "password") {
       // Assuming User class is defined in domain/models/User.ts
-      const user = new User("user_id", "user", new RoleEntity("user"));
+      const user = new UserEntity("user_id", "user", new RoleEntity("user"));
       return user;
     }
     return null; // Return null for failed authentication
@@ -21,7 +25,7 @@ class AuthService {
     this.authRepository = authRepository;
   }
 
-  async login(username: string, password: string): Promise<User | null> {
+  async login(username: string, password: string): Promise<UserEntity | null> {
     return this.authRepository.authenticate(username, password);
   }
 }
